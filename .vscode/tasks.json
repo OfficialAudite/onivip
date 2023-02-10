@@ -10,15 +10,15 @@
       },
 
       "osx": {
-        "command": "C:\\Users\\info\\AppData\\Roaming\\spcode\\sourcepawn\\configs\\1.11\\compile.exe"
+        "command": "C:\\Users\\info\\AppData\\Roaming\\spcode\\sourcepawn\\configs\\1.11\\spcomp.exe"
       },
 
 			"linux": {
-        "command": "C:\\Users\\info\\AppData\\Roaming\\spcode\\sourcepawn\\configs\\1.11\\compile.exe"
+        "command": "C:\\Users\\info\\AppData\\Roaming\\spcode\\sourcepawn\\configs\\1.11\\spcomp.exe"
       },
 
 			"windows": {
-        "command": "C:\\Users\\info\\AppData\\Roaming\\spcode\\sourcepawn\\configs\\1.11\\compile.exe"
+        "command": "C:\\Users\\info\\AppData\\Roaming\\spcode\\sourcepawn\\configs\\1.11\\spcomp.exe"
       },
 
       "args": [
@@ -28,7 +28,8 @@
         "-v2", // "erbosity level; 0=quiet, 1=normal, 2=verbose
         "-iC:\\Users\\info\\sourcemodAPI\\addons\\sourcemod\\scripting\\include", // My default includes
         "-i${workspaceFolder}/scripting/include", // Include ppath of the plugin with all 3rd-party-includes
-        "-o${workspaceFolder}/plugins/${fileBasenameNoExtension}.smx" // Output path for the smx file
+        "-i${workspaceFolder}/scripting/", // Include ppath of the plugin with all 3rd-party-includes
+        "-o${workspaceFolder}/plugins/${fileBasenameNoExtension}.smx", // Output path for the smx file
       ],
 
       "problemMatcher": {

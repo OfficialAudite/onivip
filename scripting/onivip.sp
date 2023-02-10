@@ -108,7 +108,7 @@ public void Event_OnPlayerDisconnect(Event event, const char[] sName, bool bDont
 
 public Action CP_OnChatMessage(int& author, ArrayList recipients, char[] flagstring, char[] name, char[] message, bool& processcolors, bool& removecolors)
 {
-	char sNewName[MAXLENGTH_NAME], sNewMessage[MAXLENGTH_MESSAGE];
+	char sNewName[MAXLENGTH_NAME];
 	
     if(player[author].rank != 0) {
         int nc = player[author].namecolor;

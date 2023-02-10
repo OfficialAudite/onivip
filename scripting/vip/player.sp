@@ -49,11 +49,20 @@ enum struct Player{
     		char sSQLQuery[512], sSteamID[64];
     		GetClientAuthId(this.id, AuthId_SteamID64, sSteamID, sizeof(sSteamID));
     		
+			if(IsVIP(this.id) && this.rank == 0){
+					this.rank = 1;
+					this.tag = 0;
+				}
+			else if(IsSVIP(this.id) && this.rank == 0){
+				this.rank = 2;
+				this.tag = 1;
+			}
+
     		int iClientForumID = Forum_GetClientID(this.id);
     		
     		g_hDatabase.Format(sSQLQuery, sizeof(sSQLQuery),
-    		"UPDATE `%s_vip` SET rank = %d, forumid = %d, tag = %d, activeperk = %d, namecolor = %d, model = %d, forumid = %d, showtag = %d WHERE steamid='%s';", 
-    		DB_CONNECTION, this.rank, iClientForumID, this.tag, this.activePerk, this.namecolor, this.model, this.forumID, this.showTag ? 1 : 0, sSteamID);
+    		"INSERT INTO `%s_vip` (steamid, rank, forumid, tag, activeperk, namecolor, model, showtag) VALUES ('%s', %d, %d, %d, %d, %d, %d, %d) ON DUPLICATE KEY UPDATE rank = %d, forumid = %d, tag = %d, activeperk = %d, namecolor = %d, model = %d, showtag = %d;", 
+    		DB_CONNECTION, sSteamID, this.rank, iClientForumID, this.tag, this.activePerk, this.namecolor, this.model, this.showTag ? 1 : 0, this.rank, iClientForumID, this.tag, this.activePerk, this.namecolor, this.model, this.showTag ? 1 : 0);
     		
     		g_hDatabase.Query(SQL_SavePlayer_Callback, sSQLQuery);
     	}

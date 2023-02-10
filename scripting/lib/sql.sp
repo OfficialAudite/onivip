@@ -41,12 +41,12 @@ public void SQL_GetPlayer_Callback(Database db, DBResultSet results, const char[
 				
 				CreateTimer(5.0, Timer_GivePerks, GetClientUserId(client), TIMER_FLAG_NO_MAPCHANGE);
 			}else if(!results.FetchRow()){
-				if(IsVIP(client)){
+				if(IsVIP(client) && player[client].rank == 0){
 					player[client].rank = 1;
 					player[client].tag = 0;
 					player[client].Set();
 				}
-				else if(IsSVIP(client)){
+				else if(IsSVIP(client) && player[client].rank == 0){
 					player[client].rank = 2;
 					player[client].tag = 1;
 					player[client].Set();
@@ -60,7 +60,7 @@ public Action Timer_GivePerks(Handle tmr, any data) {
 	int client = GetClientOfUserId(data);
 	if(IsValidClient(client)) {
 		int rank = player[client].rank;
-        OP_Print(client, "You have received your %s perks!", g_sRanks[rank]);
+        OP_Print(client, "You have received your %s \x08perks!", g_sRanks[rank]);
 	}
 	return Plugin_Continue;
 }
