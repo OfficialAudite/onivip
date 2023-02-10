@@ -28,7 +28,6 @@
         "-v2", // "erbosity level; 0=quiet, 1=normal, 2=verbose
         "-iC:\\Users\\info\\sourcemodAPI\\addons\\sourcemod\\scripting\\include", // My default includes
         "-i${workspaceFolder}/scripting/include", // Include ppath of the plugin with all 3rd-party-includes
-        "-i${workspaceFolder}/scripting/", // Include ppath of the plugin with all 3rd-party-includes
         "-o${workspaceFolder}/plugins/${fileBasenameNoExtension}.smx" // Output path for the smx file
       ],
 
