@@ -24,6 +24,7 @@ public int SettingsMenuHandler(Menu menu, MenuAction aAction, int client, int op
             if(StrEqual(sItem, "tag", false)) {
                 player[client].showTag = !player[client].showTag;
 				OP_Print(client, "Your Tag has been toggled %s", player[client].showTag ? "\x04On" : "\x0FOff");
+				SetClientClanTag(client);
             }
 			else if(StrEqual(sItem, "namecolor", false)) { 
                 player[client].namecolor = -1;

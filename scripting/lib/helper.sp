@@ -79,25 +79,25 @@ stock bool IsValidClient(int client) {
 }
 
 stock bool IsVIP(int iClient) {
-    return CheckCommandAccess(iClient, "", ADMFLAG_RESERVATION);
+    return CheckCommandAccess(iClient, "", ADMFLAG_RESERVATION, true);
 }
 
 stock bool IsSVIP(int iClient) {
-    return CheckCommandAccess(iClient, "", ADMFLAG_CUSTOM1);
+    return CheckCommandAccess(iClient, "", ADMFLAG_CUSTOM1, true);
 }
 
 stock bool IsTADMIN(int iClient) {
-    return CheckCommandAccess(iClient, "", ADMFLAG_CUSTOM2);
+    return CheckCommandAccess(iClient, "", ADMFLAG_CUSTOM2, true);
 }
 
 stock bool IsADMIN(int iClient) {
-    return CheckCommandAccess(iClient, "", ADMFLAG_GENERIC);
+    return CheckCommandAccess(iClient, "", ADMFLAG_GENERIC, true);
 }
 
 stock bool IsSADMIN(int iClient) {
-    return CheckCommandAccess(iClient, "", ADMFLAG_RCON);
+    return CheckCommandAccess(iClient, "", ADMFLAG_RCON, true);
 }
 
 stock bool IsOWNER(int iClient) {
-    return CheckCommandAccess(iClient, "", ADMFLAG_ROOT);
+    return CheckCommandAccess(iClient, "", ADMFLAG_ROOT, true);
 }

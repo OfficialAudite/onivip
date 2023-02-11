@@ -1,4 +1,4 @@
-public void SQL_SavePlayer_Callback(Database db, DBResultSet results, const char[] szError, any data)
+public void SQL_SavePlayer_Callback(Database db, DBResultSet results, const char[] szError, int userid)
 {
 	if(db == null || results == null) {
 		PrintToChatAll("[SQL] Update Query failure: %s", szError);
@@ -6,6 +6,17 @@ public void SQL_SavePlayer_Callback(Database db, DBResultSet results, const char
 	}
 	else {
 		PrintToServer("UPDATED");
+	}
+}
+
+public void SQL_DeletePlayer_Callback(Database db, DBResultSet results, const char[] szError, int userid)
+{
+	if(db == null || results == null) {
+		PrintToChatAll("[SQL] Update Query failure: %s", szError);
+		return;
+	}
+	else {
+		PrintToServer("DELETED");
 	}
 }
 
@@ -20,7 +31,7 @@ public void SQL_GetPlayer_Callback(Database db, DBResultSet results, const char[
 	else
 	{
 		if(IsValidClient(client)) {
-			int rank, tag, activePerk, model, showTag, forumID;
+			int rank, tag, activePerk, model, showTag, forumID, givenVips, trackGiveVipsTime;
 				
 			results.FieldNameToNum("showtag", showTag);
 			results.FieldNameToNum("tag", tag);
@@ -28,6 +39,8 @@ public void SQL_GetPlayer_Callback(Database db, DBResultSet results, const char[
 			results.FieldNameToNum("activeperk", activePerk);
 			results.FieldNameToNum("forumid", forumID);
 			results.FieldNameToNum("model", model);
+			results.FieldNameToNum("givenvips", givenVips);
+			results.FieldNameToNum("trackGiveVipsTime", trackGiveVipsTime);
 			
 			if(results.FetchRow())
 			{
@@ -38,19 +51,11 @@ public void SQL_GetPlayer_Callback(Database db, DBResultSet results, const char[
 				player[client].activePerk = results.FetchInt(activePerk);
 				player[client].forumID = results.FetchInt(forumID);
 				player[client].model = results.FetchInt(model);
+				player[client].givenVips = results.FetchInt(givenVips);
+				player[client].trackGiveVipsTime = results.FetchInt(trackGiveVipsTime);
+				
 				
 				CreateTimer(5.0, Timer_GivePerks, GetClientUserId(client), TIMER_FLAG_NO_MAPCHANGE);
-			}else if(!results.FetchRow()){
-				if(IsVIP(client) && player[client].rank == 0){
-					player[client].rank = 1;
-					player[client].tag = 0;
-					player[client].Set();
-				}
-				else if(IsSVIP(client) && player[client].rank == 0){
-					player[client].rank = 2;
-					player[client].tag = 1;
-					player[client].Set();
-				}
 			}
 		}
 	}
@@ -60,7 +65,7 @@ public Action Timer_GivePerks(Handle tmr, any data) {
 	int client = GetClientOfUserId(data);
 	if(IsValidClient(client)) {
 		int rank = player[client].rank;
-        OP_Print(client, "You have received your %s \x08perks!", g_sRanks[rank]);
+		OP_Print(client, "You have received your %s \x08perks!", g_sRanks[rank]);
 	}
 	return Plugin_Continue;
 }

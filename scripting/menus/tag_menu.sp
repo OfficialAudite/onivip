@@ -16,12 +16,28 @@ char g_sTags[][][] = {
     {"DEV", 		"\x02"}
 };
 
+void SetClientClanTag(int client) 
+{
+	char sNewTag[MAXLENGTH_NAME];
+	int tag = player[client].tag;
+	int toggle = player[client].showTag;
+
+	if(toggle == 0) {
+		CS_SetClientClanTag(client, "");
+		return;
+	}else{
+		Format(sNewTag, MAXLENGTH_NAME, "%s |", g_sTags[tag][0]);
+		CS_SetClientClanTag(client, sNewTag);
+	}
+	
+}
+
 public Action OpenTagsMenu(int client) {
 	Menu menu = new Menu(TagMenuHandler);
 
 	FormatMenuTitle(menu, "Tags");
 	for(int i = 0; i < sizeof(g_sTags); i++) {
-		if(StrEqual(g_sTags[i][0], "VIP", false) && player[client].rank != 1) {
+		if(StrEqual(g_sTags[i][0], "VIP", false) && player[client].rank != 1 && player[client].rank != 3) {
 			menu.AddItem(g_sTags[i][Tag], g_sTags[i][Tag], ITEMDRAW_DISABLED);
 		}
         else if(StrEqual(g_sTags[i][0], "S-VIP", false) && player[client].rank != 2) {
@@ -53,6 +69,7 @@ public int TagMenuHandler(Menu menu, MenuAction aAction, int client, int option)
     switch(aAction) {
         case MenuAction_Select: {
             player[client].tag = option;
+			SetClientClanTag(client);
             OP_Print(client, "\x08You changed your tag to \x0F%s", g_sTags[option][0]);
 			
 			OpenTagsMenu(client);
